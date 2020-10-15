@@ -1,0 +1,71 @@
+
+  <ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+      <ion-title>
+        Google Maps
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+
+  <div #form id="form">
+    <form [formGroup]="coordsForm" (ngSubmit)="addLocation()">
+      <div #location id="location">
+        <h5 style="margin-left: 12px;">Localización</h5>
+        <ion-item id="latitud">
+          <ion-label position="floating" style="color: grey;">Latitud</ion-label>
+          <ion-input formControlName="latitud" type="text" style="text-align: center;" required></ion-input>
+        </ion-item>
+
+        <ion-item id="longitud">
+          <ion-label position="floating" style="color: grey;">Longitud</ion-label>
+          <ion-input formControlName="longitud" type="text" style="text-align: center;" required></ion-input>
+        </ion-item>
+
+        <ion-button id="button" [disabled]="coordsForm.invalid" (click)="addLocation()" expand="full">Añadir Localización</ion-button>
+
+      </div>
+
+
+    </form>
+  </div>
+
+  <div #map id="map">
+  </div>
+
+  <div *ngIf="arrayLocations.length > 0">
+    <div #list id="list">
+
+      <ion-list>
+        <ion-list-header>
+          <h4>Localizaciones</h4>
+          <ion-button id= "boton+i"  expandable (click)="borrarTodo()" color="danger">
+            <ion-icon name="trash"></ion-icon>Eliminar localizaciones
+          </ion-button>
+        </ion-list-header>
+        
+        <ion-item-sliding *ngFor="let locations of arrayLocations; let i = index">
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-icon style="zoom: 2.0;" name="location-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h1>Localización Nº{{ i+1 }}</h1>
+              <h2>Latitud:  {{ locations.location['lat'] }}</h2>
+              <h2>Longitud:  {{ locations.location['lng'] }}</h2>
+            </ion-label>
+
+            <ion-item-options side="end">
+              <ion-button id= "boton+i"  expandable (click)="borrar(locations, i)" color="danger">
+                <ion-icon name="trash"></ion-icon>Eliminar
+              </ion-button>
+            </ion-item-options>
+        </ion-item>
+
+        </ion-item-sliding>
+      </ion-list>
+
+    </div>
+  </div>
+</ion-content>
